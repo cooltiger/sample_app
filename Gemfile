@@ -4,16 +4,29 @@ ruby '2.1.5'
 #ruby-gemset=railstutorial_rails_4_0
 
 gem 'rails', '4.1.7'
-#gem 'rails', '4.0.5'
+#gem 'rails', '4.0.0'
 
 group :development, :test do
   gem 'sqlite3', '1.3.8'
-  gem 'rspec-rails', '2.13.1'
+  #gem 'rspec-rails', '2.13.1'
+  #gem 'guard-rspec', '2.5.0'
+
+  gem 'rspec-rails', '~> 3.1.0'
+  gem 'guard-rspec', '4.3.1'
+
+  # spork maybe not supported by rails 4.1 
+  #gem 'spork-rails', '~> 4.0.0'
+  #gem 'guard-spork', '~> 1.5.0'
+  #gem 'childprocess', '~> 0.3.0'
+
+  gem 'spring-commands-rspec'
+  gem 'spring'
+
 end
 
 group :test do
   gem 'selenium-webdriver', '2.35.1'
-  gem 'capybara', '2.1.0'
+  gem 'capybara', '2.2.0'
   gem "shoulda-matchers", "~> 2.6.0" 
 end
 
@@ -56,7 +69,6 @@ gem 'turbolinks'
 #gem 'sdoc', '~> 0.4.0',          group: :doc
 
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-gem 'spring',        group: :development
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
