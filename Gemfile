@@ -14,6 +14,7 @@ group :development, :test do
   #gem 'guard-rspec', '2.5.0'
 
   gem 'rspec-rails', '~> 3.1.0'
+  gem 'transpec'
   gem 'guard-rspec', '4.3.1'
 
   # spork maybe not supported by rails 4.1 
