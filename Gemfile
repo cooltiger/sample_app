@@ -17,6 +17,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.1.0'
   gem 'transpec'
   gem 'guard-rspec', '4.3.1'
+  gem 'rspec-its', '~> 1.0.0.pre'
 
   # spork maybe not supported by rails 4.1 
   #gem 'spork-rails', '~> 4.0.0'
@@ -26,11 +27,11 @@ group :development, :test do
   gem 'spring-commands-rspec'
   gem 'spring'
 
+  gem 'capybara', '2.2.0'
 end
 
 group :test do
   gem 'selenium-webdriver', '2.35.1'
-  gem 'capybara', '2.2.0'
   gem "shoulda-matchers", "~> 2.6.0"
   gem 'factory_girl_rails', '4.2.1'
 end

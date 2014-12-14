@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'users/new'
 
   resources :users , :only => [:show , :new , :create]
+  resources :sessions, only: [:new, :create ]
 
   #get 'users/show'
   #get 'static_pages/home'
@@ -18,6 +19,8 @@ Rails.application.routes.draw do
   match '/contact', to: 'static_pages#contact', via: 'get'
 
   match '/signup', to: 'users#new', via: 'get'
+  match '/signin',  to: 'sessions#new',         via: 'get'
+  match '/signout', to: 'sessions#destroy',     via: 'delete'
 
   #match '/', to: 'static_pages#home', via: 'get'
 
