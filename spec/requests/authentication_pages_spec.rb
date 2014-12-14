@@ -20,12 +20,13 @@ describe "Authentication", :type=>:request do
 
 			it { should have_title('Sign in') }
 			it { should have_selector('div.alert.alert-error', text: 'Invalid') }
+
+			describe "after visiting another page" do
+				before { click_link "Home" }
+				it { should_not have_selector('div.alert.alert-error') }
+			end
 		end
 
-		describe "after visiting another page" do
-			before { click_link "Home" }
-			it { should_not have_selector('div.alert.alert-error') }
-		end
 
 		describe "with valid information" do
 			let(:user) { FactoryGirl.create(:user) }

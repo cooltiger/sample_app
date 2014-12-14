@@ -11,8 +11,9 @@ class SessionsController < ApplicationController
 			redirect_to user
 		else
 			# エラーメッセージを表示し、サインインフォームを再描画する。
-			flash[:error] = 'Invalid email/password combination' # 誤りあり!
+			flash.now[:error] = 'Invalid email/password combination'
 			render 'new'
+			# render :action => 'new'
 		end
 	end
 
