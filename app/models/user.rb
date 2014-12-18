@@ -5,11 +5,11 @@ class User < ActiveRecord::Base
 	# 保存する前に、強制的に文字を小文字に変換する
 	before_save { self.email = email.downcase}
 
-	# before_create :create_remember_token
+	before_create :create_remember_token
 	# TODO 上記：なぜ before_createの後に、「：」を使って、メソッドを利用する？
-	before_create do
-		create_remember_token
-	end
+	# before_create do
+	# 	create_remember_token
+	# end
 
 	validates :name, presence: true, length: {maximum: 50}
 	VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)+\z/i

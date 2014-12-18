@@ -20,6 +20,10 @@ class Foo
 end
 
 
+str = nil
+str2 = str || 'testa'
+p str2
+
 f = Foo.new
 f.abc='wujun'
 name = f.efg

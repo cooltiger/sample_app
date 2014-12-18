@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   get 'users/new'
 
-  resources :users , :only => [:show , :new , :create]
+  resources :users , :only => [:show , :new , :create, :edit, :update , :index, :foo]
   resources :sessions, only: [:new, :create ]
 
   #get 'users/show'

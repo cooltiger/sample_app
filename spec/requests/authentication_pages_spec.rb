@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Authentication", :type=>:request do
+describe "Authentication", :type => :request do
 
 	subject { page }
 
@@ -30,14 +30,16 @@ describe "Authentication", :type=>:request do
 
 		describe "with valid information" do
 			let(:user) { FactoryGirl.create(:user) }
-			before do
-				fill_in "Email",    with: user.email.upcase
-				fill_in "Password", with: user.password
-				click_button "Sign in"
-			end
+			# before do
+			# 	fill_in "Email",    with: user.email.upcase
+			# 	fill_in "Password", with: user.password
+			# 	click_button "Sign in"
+			# end
+			before { sign_in(user) }
 
 			it { should have_title(user.name) }
 			it { should have_link('Profile', href: user_path(user)) }
+			it { should have_link('Settings', href: edit_user_path(user)) }
 			it { should have_link('Sign out', href: signout_path) }
 			it { should_not have_link('Sign in', href: signin_path) }
 
@@ -50,4 +52,99 @@ describe "Authentication", :type=>:request do
 
 	end
 
+	describe "authenticate" do
+
+		describe "for non sign in users" do
+
+			let(:user) { FactoryGirl.create(:user) }
+
+			describe "when attempting to vist a protected page" do
+				before do
+					visit edit_user_path(user)
+					fill_in "Email", with: user.email
+					fill_in "Password", with: user.password
+					click_button "Sign in"
+				end
+
+				describe "after sign in success" do
+
+					it "should render the desired page " do
+						expect(page).to have_title('Edit User')
+					end
+				end
+
+			end
+
+			describe "in the Users controller" do
+
+				describe "visit the editin page" do
+					before { visit edit_user_path(user) }
+					it { should have_title('Sign in') }
+
+				end
+
+				describe "submit to the update action" do
+					# 更新の場合、実際表示ページがないため、capybaraが使えないため、railsのメソッドを使用する
+					before { patch user_path(user) }
+					specify { expect(response).to redirect_to(signin_path) }
+				end
+
+				describe "visiting the user index" do
+					before { visit users_path }
+					it { should have_title('Sign in') }
+				end
+
+			end
+
+		end
+
+
+		describe "as wrong user" do
+			let(:user) { FactoryGirl.create(:user) }
+			let(:wrong_user) { FactoryGirl.create(:user, name: "otherOne", email: "wrong@example.com") }
+
+
+			before { sign_in user, no_capybara: true }
+
+			# describe "when access other user profile" do
+			# 	before { sign_in user }
+			# 	 before { visit user_path(wrong_user)}
+			# 	 it { should have_title(user.name) }
+			# end
+
+			describe "submitting a GET request to the Users#edit action" do
+				# todo question なぜ no_capybaraでサインインする場合も current_userが設定されている？
+				before { get edit_user_path(wrong_user) }
+				specify "debug" do
+					var = response.body
+					expect(response.body).not_to match(full_title('Edit user'))
+				end
+				# specify { expect(response.header).to eq 'test' }
+				specify { expect(response).to redirect_to(root_url) }
+
+				# 下記のやりかた、capybaraではないため、visit時、userの情報がない。 no loginのhome pageと同じ
+				# before { visit edit_user_path(wrong_user)}
+				# it { should_not have_title('Edit User') }
+				# it { should have_title(full_title('')) }
+				# it { should have_title('Sign in') }
+			end
+
+			describe "submitting a PATCH request to the Users#update action" do
+				before { patch user_path(wrong_user) }
+				specify { expect(response).to redirect_to(root_path) }
+			end
+
+
+			describe "when no_capybara, test goto root show home page" do
+				# この場合、capybaraではないため、visit時、userの情報がない。 no loginのhome pageと同じ
+				before { visit root_path }
+				it { should have_title('Rails') }
+				it { should have_link('Sign in') }
+				# it { should have_link('Settings',    href: edit_user_path(user)) }
+			end
+
+		end
+
+
+	end
 end
