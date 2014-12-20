@@ -49,7 +49,6 @@ describe "Authentication", :type => :request do
 			end
 		end
 
-
 	end
 
 	describe "authenticate" do
@@ -69,7 +68,7 @@ describe "Authentication", :type => :request do
 				describe "after sign in success" do
 
 					it "should render the desired page " do
-						expect(page).to have_title('Edit User')
+						expect(page).to have_title('Edit user')
 					end
 				end
 
@@ -85,7 +84,7 @@ describe "Authentication", :type => :request do
 
 				describe "submit to the update action" do
 					# 更新の場合、実際表示ページがないため、capybaraが使えないため、railsのメソッドを使用する
-					before { patch user_path(user) }
+					before { put user_path(user) }
 					specify { expect(response).to redirect_to(signin_path) }
 				end
 
@@ -116,7 +115,6 @@ describe "Authentication", :type => :request do
 				# todo question なぜ no_capybaraでサインインする場合も current_userが設定されている？
 				before { get edit_user_path(wrong_user) }
 				specify "debug" do
-					var = response.body
 					expect(response.body).not_to match(full_title('Edit user'))
 				end
 				# specify { expect(response.header).to eq 'test' }
@@ -132,6 +130,8 @@ describe "Authentication", :type => :request do
 			describe "submitting a PATCH request to the Users#update action" do
 				before { patch user_path(wrong_user) }
 				specify { expect(response).to redirect_to(root_path) }
+				# below deprecated when test patch
+				# specify { response.should redirect_to(root_path) }
 			end
 
 
@@ -145,6 +145,19 @@ describe "Authentication", :type => :request do
 
 		end
 
+		describe "as non-admin user" do
+
+			let(:user) { FactoryGirl.create(:user)}
+			let(:non_admin) { FactoryGirl.create(:user)}
+
+			before { sign_in non_admin, no_capybara: true }
+
+			describe "submitting a delete request to the User#delete action" do
+				before { delete user_path(user)}
+				specify { expect(response).to redirect_to(root_path) }
+			end
+
+		end
 
 	end
 end

@@ -137,4 +137,15 @@ RSpec.configure do |config|
   config.order = "random"
  
   config.include Capybara::DSL
+
+  # to save the input of word:FactoryGirl initially
+  config.include FactoryGirl::Syntax::Methods
+
+  # it do not clear , can not create normally
+  config.before(:all) do
+    FactoryGirl.factories.clear
+    FactoryGirl.sequences.clear
+    FactoryGirl.find_definitions
+  end
+
 end

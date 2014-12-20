@@ -1,5 +1,8 @@
 class User < ActiveRecord::Base
 
+	# below can not user in rails 4
+	# attr_accessible :name, :email, :password, :password_confirmation
+
 	has_secure_password
 
 	# 保存する前に、強制的に文字を小文字に変換する
