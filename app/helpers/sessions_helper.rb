@@ -9,6 +9,8 @@ module SessionsHelper
 	def sign_out
 		self.current_user = nil
 		cookies.delete(:remember_token)
+		# sessionをすべてクリアする
+		reset_session
 	end
 
 	def signed_in?

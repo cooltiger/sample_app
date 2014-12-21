@@ -4,6 +4,16 @@ describe "Authentication", :type => :request do
 
 	subject { page }
 
+
+	describe "Home page" do
+
+		before {visit root_path}
+
+		it { should_not have_link('Profile') }
+		it { should_not have_link('Settings') }
+
+	end
+
 	describe "signin page" do
 
 		before { visit signin_path }
@@ -70,7 +80,27 @@ describe "Authentication", :type => :request do
 					it "should render the desired page " do
 						expect(page).to have_title('Edit user')
 					end
+
+
+					describe "when sign in again" do
+
+						before do
+
+							click_link "Sign out"
+							click_link "Sign in"
+
+							fill_in "Email", with: user.email
+							fill_in "Password", with: user.password
+							click_button "Sign in"
+
+						end
+
+						it { should have_title(full_title(''))}
+
+					end
+
 				end
+
 
 			end
 

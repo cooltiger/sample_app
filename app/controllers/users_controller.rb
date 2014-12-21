@@ -19,10 +19,18 @@ class UsersController < ApplicationController
   end
 
   def new
+    if signed_in?
+      redirect_to root_url and return
+    end
     @user = User.new
+
   end
 
   def create
+
+    if signed_in?
+      redirect_to root_url and return
+    end
     @user = User.new(user_params)    # 実装は終わっていないことに注意!
     if @user.save
       # 保存の成功をここで扱う。
