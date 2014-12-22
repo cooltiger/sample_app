@@ -1,7 +1,8 @@
 class User < ActiveRecord::Base
+	has_many :microposts
 
 	# below can not user in rails 4
-	# attr_accessible :name, :email, :password, :password_confirmation
+	attr_accessible :name, :email, :password, :password_confirmation
 
 	has_secure_password
 

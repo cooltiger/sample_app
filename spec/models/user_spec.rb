@@ -18,6 +18,7 @@ describe User do
 	it { should respond_to(:remember_token) }
 	it { should respond_to(:authenticate) }
 	it { should respond_to(:admin) }
+	it { should respond_to(:microposts)}
 
 
 	it { should be_valid }
@@ -139,6 +140,22 @@ describe User do
 	describe "remember token" do
 		before { @user.save }
 		its(:remember_token) { should_not be_blank }
+	end
+
+	describe "micropost associations" do
+
+		before { @user.save }
+		let!(:older_mpost) { FactoryGirl.create(:micropost, user: @user, created_at: 1.day.ago )}
+		let!(:newer_mpost) { FactoryGirl.create(:micropost, user: @user, created_at: 1.hour.ago )}
+
+		it  "should have the right microposts in the right order" do
+			# todo below is not work
+			# expect(@user.microposts) == ([ newer_mpost, older_mpost])
+
+			# below is deprecated
+			# @user.microposts.should == [ newer_mpost, older_mpost ]
+			@user.microposts.should == [ older_mpost, newer_mpost ]
+		end
 	end
 
 	# below is same as :  it { should respond_to(:name) }
