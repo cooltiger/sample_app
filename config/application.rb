@@ -30,8 +30,5 @@ module SampleApp
 
     # maybe not supported in the rails4
     # config.active_record.whitelist_attributes = true
-
-    # below is the attribute in the gem [protected_attributes]
-    config.active_record.mass_assignment_sanitizer = :strict
   end
 end

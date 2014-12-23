@@ -11,6 +11,7 @@ gem 'bcrypt-ruby', '3.1.2'
 gem 'faker' , '~> 1.0.0'
 gem 'will_paginate', '3.0.5'
 gem 'bootstrap-will_paginate', '0.0.6'
+gem 'protected_attributes'
 
 group :development, :test do
   gem 'sqlite3', '1.3.8'
@@ -37,7 +38,6 @@ group :test do
   gem 'selenium-webdriver', '2.35.1'
   gem "shoulda-matchers", "~> 2.6.0"
   gem 'factory_girl_rails', '4.2.1'
-  gem 'protected_attributes'
 end
 
 #gem 'sass-rails', '4.0.2'
