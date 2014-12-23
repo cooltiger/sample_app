@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  has_many :microposts
+  has_many :microposts, dependent: :destroy
 
   # below can not user in rails 4
   attr_accessible :name, :email, :password, :password_confirmation

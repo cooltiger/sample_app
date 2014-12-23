@@ -154,6 +154,19 @@ describe User do
       # below is deprecated
       # @user.microposts.should == [ newer_mpost, older_mpost ]
     end
+
+    it "should destroy associated microposts" do
+      # expect { @user.destroy }.to change(Micropost, :count).by(-2)
+      microposts = @user.microposts.dup
+      @user.destroy
+      expect(microposts.count).to be > 0
+      microposts.each do |p|
+        expect(Micropost.find_by_id(p.id)).to be_nil
+      end
+
+
+    end
+
   end
 
   # below is same as :  it { should respond_to(:name) }
