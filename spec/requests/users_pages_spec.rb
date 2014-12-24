@@ -135,7 +135,7 @@ describe "User pages", :type => :request do
         #   expect(page).to have_selector('li', text: user.name)
         # end
 
-        User.paginate(page: 1, per_page: 5).each do |user|
+        User.order('id').paginate(page: 1, per_page: 5).each do |user|
           expect(page).to have_selector('li', text: user.name)
         end
       end
