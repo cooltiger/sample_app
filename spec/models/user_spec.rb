@@ -159,7 +159,7 @@ describe User do
       # expect { @user.destroy }.to change(Micropost, :count).by(-2)
       micropost_ids = @user.microposts.ids
       @user.destroy
-      expect(micropost_ids.count).to be > 2
+      expect(micropost_ids.count).to be > 0
       micropost_ids.each do |id|
         expect(Micropost.find_by_id(id)).to be_nil
       end
