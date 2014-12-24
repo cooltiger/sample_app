@@ -157,11 +157,11 @@ describe User do
 
     it "should destroy associated microposts" do
       # expect { @user.destroy }.to change(Micropost, :count).by(-2)
-      microposts = @user.microposts.dup
+      micropost_ids = @user.microposts.ids
       @user.destroy
-      expect(microposts.count).to be > 0
-      microposts.each do |p|
-        expect(Micropost.find_by_id(p.id)).to be_nil
+      expect(micropost_ids.count).to be > 2
+      micropost_ids.each do |id|
+        expect(Micropost.find_by_id(id)).to be_nil
       end
 
 
