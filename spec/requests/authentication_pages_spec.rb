@@ -107,7 +107,7 @@ describe "Authentication", :type => :request do
 
         end
 
-        describe "submit to the update action" do
+        describe "submitting to the update action" do
           # 更新の場合、実際表示ページがないため、capybaraが使えないため、railsのメソッドを使用する
           before { put user_path(user) }
           specify { expect(response).to redirect_to(signin_path) }
@@ -116,6 +116,22 @@ describe "Authentication", :type => :request do
         describe "visiting the user index" do
           before { visit users_path }
           it { should have_title('Sign in') }
+        end
+
+      end
+
+
+      describe "in the Microposts controller" do
+
+        describe "submitting to the create action" do
+          before { post microposts_path}
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+
+        describe "submitting to the destroy action " do
+          let(:micropost) { FactoryGirl.create(:micropost) }
+          before { delete micropost_path(micropost) }
+          specify { expect(response).to redirect_to(signin_path) }
         end
 
       end
