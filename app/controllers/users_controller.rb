@@ -11,6 +11,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @microposts = @user.microposts.paginate(page: params[:page], per_page: 10)
     # 仮に他ユーザ情報がみせない時の権限チェック
     # if !current_user?(@user)
     #   flash[:error] = "you can not access others"
