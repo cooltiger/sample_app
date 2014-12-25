@@ -8,7 +8,7 @@ namespace :db do
     admin1.toggle!(:admin)
 
     admin2 = User.create!(name: "Wu Jun",
-                         email: "cooltigerjp@gmail.jp",
+                         email: "cooltigerjp@gmail.com",
                          password: "aaa111",
                          password_confirmation: "aaa111")
     admin2.toggle!(:admin)
