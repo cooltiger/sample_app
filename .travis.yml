@@ -1,0 +1,13 @@
+language: ruby
+sudo: false
+rvm:
+  - 2.1.5
+cache: bundler
+before_script:
+  - bundle exec rake db:create
+  - bundle exec rake db:migrate
+script:
+  - bundle exec rspec spec
+notifications:
+  slack:
+    secure: cEYAxFxKLKDOup2NeDCznPIzRhFL0gJxV8HAwBUmCbjhweYU6nLx7CsP9gq9DjpdA2pQVpoO2tzeYf8i2586VerfMY+5ZkYTs/MgS6sDqzO0lKcny5AXtgXCHEExR+im7Wowm4D1V5cn4CZe8Cb83yrs1hgHLyzzNnYYFcej37U=

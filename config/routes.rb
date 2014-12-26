@@ -1,10 +1,16 @@
 Rails.application.routes.draw do
 
 
+  get 'micropost/create'
+
+  get 'micropost/destroy'
+
   get 'users/new'
 
   resources :users , :only => [:show , :new , :create, :edit, :update , :index, :destroy]
   resources :sessions, only: [:new, :create ]
+  resources :microposts, only: [:create, :destroy]
+
 
   #get 'users/show'
   #get 'static_pages/home'

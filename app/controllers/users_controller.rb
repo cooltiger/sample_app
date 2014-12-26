@@ -11,6 +11,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @microposts = @user.microposts.paginate(page: params[:page], per_page: 10)
     # 仮に他ユーザ情報がみせない時の権限チェック
     # if !current_user?(@user)
     #   flash[:error] = "you can not access others"
@@ -79,13 +80,6 @@ class UsersController < ApplicationController
   end
 
   # Before actions
-
-  def signed_in_user
-    store_location
-    # TODO 元はsignin_url, なぜ
-    redirect_to signin_path, notice: "Please sign in." unless signed_in?
-  end
-
   def correct_user
     @user = User.find(params[:id])
     redirect_to(root_path) unless current_user?(@user)

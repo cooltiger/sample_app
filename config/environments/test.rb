@@ -39,4 +39,7 @@ Rails.application.configure do
 
   # bcrypt'のコスト関数を下げることでテストの速度を向上させる。
   ActiveModel::SecurePassword.min_cost = true
+
+  # below is the attribute in the gem [protected_attributes]
+  config.active_record.mass_assignment_sanitizer = :strict
 end
