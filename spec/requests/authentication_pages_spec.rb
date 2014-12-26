@@ -147,7 +147,6 @@ describe "Authentication", :type => :request do
       before { sign_in user, no_capybara: true }
 
       describe "submitting a GET request to the Users#edit action" do
-        # todo question なぜ no_capybaraでサインインする場合も current_userが設定されている？
         before { get edit_user_path(wrong_user) }
         specify "debug" do
           expect(response.body).not_to match(full_title('Edit user'))

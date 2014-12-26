@@ -1,24 +1,10 @@
 Rails.application.routes.draw do
 
-
-  get 'micropost/create'
-
-  get 'micropost/destroy'
-
-  get 'users/new'
-
   resources :users , :only => [:show , :new , :create, :edit, :update , :index, :destroy]
   resources :sessions, only: [:new, :create ]
   resources :microposts, only: [:create, :destroy]
 
-
-  #get 'users/show'
-  #get 'static_pages/home'
-
   root 'static_pages#home'
-#  get 'static_pages/help'
-#  get 'static_pages/about'
-#  get 'static_pages/contract'
 
   match '/help',    to: 'static_pages#help',    via: 'get'
   match '/about',   to: 'static_pages#about',   via: 'get'

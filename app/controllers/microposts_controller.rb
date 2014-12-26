@@ -6,7 +6,6 @@ class MicropostsController < ApplicationController
   end
 
   def create
-    # todo confirm here the build and new is same ,why
     @micropost = current_user.microposts.build(params[:micropost])
     if @micropost.save
       flash[:success] = "Micropost created"
