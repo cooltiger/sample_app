@@ -32,7 +32,6 @@ describe "Static pages", :type => :request do
           expect(page).to  have_selector("li##{item.id}", text: item.content)
         end
       end
-
     end
 
   end
