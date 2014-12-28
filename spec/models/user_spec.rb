@@ -19,6 +19,7 @@ describe User do
   it { should respond_to(:authenticate) }
   it { should respond_to(:admin) }
   it { should respond_to(:microposts)}
+  it { should respond_to(:feed)}
 
 
   it { should be_valid }
@@ -163,8 +164,14 @@ describe User do
       micropost_ids.each do |id|
         expect(Micropost.find_by_id(id)).to be_nil
       end
+    end
 
+    describe "status" do
+      let(:unfollowed_post) { FactoryGirl.create(:micropost, user: FactoryGirl.create(:user)) }
 
+      its(:feed) { should include(older_mpost)}
+      its(:feed) { should include(newer_mpost)}
+      its(:feed) { should_not include(unfollowed_post)}
     end
 
   end

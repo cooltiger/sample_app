@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :micropost do
-    content "Test a first post"
+    sequence(:content)   { |n| "Test post no. #{n}" }
     user
   end
 end
