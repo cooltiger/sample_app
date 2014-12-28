@@ -20,6 +20,9 @@ class User < ActiveRecord::Base
   # validates_presence_of(:name)
   validates :password, length: { minimum: 6 }
 
+  def feed
+    Micropost.where("user_id = ?", id)
+  end
 
   def self.new_remember_token
     SecureRandom.urlsafe_base64
