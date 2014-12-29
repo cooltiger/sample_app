@@ -36,9 +36,25 @@ class User < ActiveRecord::Base
     Digest::SHA1.hexdigest(token.to_s)
   end
 
+  def follow!(other_user)
+    # 'self.' can be abbreviate
+    self.relationships.create!(followed_id: other_user.id)
+  end
+
+  def unfollow!(other_user)
+    self.relationships.find_by_followed_id(other_user.id).destroy
+  end
+
+  def following?(other_user)
+    # relationships.find_by_followed_id(other_user.id)
+    # below is the same
+    followed_users.find_by_id(other_user.id)
+  end
+
   private
 
   def create_remember_token
     self.remember_token = User.encrypt(User.new_remember_token)
   end
+
 end

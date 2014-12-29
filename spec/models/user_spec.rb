@@ -21,8 +21,13 @@ describe User do
   it { should respond_to(:microposts)}
   it { should respond_to(:feed)}
   it { should respond_to(:relationships)}
+  it { should respond_to(:reverse_relationships)}
   it { should respond_to(:followed_users)}
   it { should respond_to(:follower_users)}
+
+  it { should respond_to(:following?)}
+  it { should respond_to(:follow!)}
+
 
   it { should be_valid }
   it { should_not be_admin}
@@ -174,6 +179,41 @@ describe User do
       its(:feed) { should include(older_mpost)}
       its(:feed) { should include(newer_mpost)}
       its(:feed) { should_not include(unfollowed_post)}
+    end
+
+  end
+
+
+  describe "following and followed" do
+    let(:other_user) { FactoryGirl.create(:user) }
+
+    before do
+      @user.save
+      @user.follow!(other_user)
+    end
+
+    # be_following mean : boolean vertification of following method
+    it { should be_following(other_user) }
+    its(:followed_users) { should include(other_user) }
+
+    describe "followed user" do
+      subject { other_user }
+      its(:follower_users) { should include(@user) }
+    end
+
+    context "unfollow other user"  do
+      before do
+        @user.unfollow!(other_user)
+      end
+
+      it { should_not be_following(other_user) }
+      its(:followed_users) { should_not include(other_user) }
+
+      describe "followed user" do
+        subject { other_user }
+        its(:follower_users) { should_not include(@user) }
+      end
+
     end
 
   end
