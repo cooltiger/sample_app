@@ -213,26 +213,6 @@ describe User do
         subject { other_user }
         its(:follower_users) { should_not include(@user) }
       end
-
     end
-
   end
-
-  # below is same as :  it { should respond_to(:name) }
-  # it "should respond to 'name'" do
-  #  expect(@user).to respond_to(:name)
-  # end
-
-
-  # below is same as :  it { should be_valid }
-  # it "should be valid" do
-  #  expect(@user).to be_valid
-  # end
-
 end
-
-# require 'rails_helper'
-#
-# RSpec.describe User, :type => :model do
-#   pending "add some examples to (or delete) #{__FILE__}"
-# end

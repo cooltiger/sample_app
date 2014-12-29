@@ -42,13 +42,11 @@ class User < ActiveRecord::Base
   end
 
   def unfollow!(other_user)
-    self.relationships.find_by_followed_id(other_user.id).destroy
+    self.relationships.find_by(followed_id: other_user.id).destroy
   end
 
   def following?(other_user)
-    # relationships.find_by_followed_id(other_user.id)
-    # below is the same
-    followed_users.find_by_id(other_user.id)
+    self.relationships.find_by(followed_id: other_user.id)
   end
 
   private
