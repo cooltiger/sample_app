@@ -9,6 +9,7 @@ describe "Static pages", :type => :request do
     it { is_expected.to have_content('sample app') }
     it { is_expected.to have_title(full_title(page_title)) }
   end
+
   describe "Home page" do
 
     before {visit root_path}
@@ -32,9 +33,22 @@ describe "Static pages", :type => :request do
           expect(page).to  have_selector("li##{item.id}", text: item.content)
         end
       end
-    end
 
+      describe "follower / following user count" do
+        let(:other_user) { FactoryGirl.create(:user) }
+
+        before do
+          user.follow!(other_user)
+          visit root_path
+        end
+
+        it { should have_link("followers", href: followers_user_path(user)) }
+        it { should have_link("1 following", href: followings_user_path(user)) }
+      end
+
+    end
   end
+
   describe "Help page" do
     before { visit help_path}
 
