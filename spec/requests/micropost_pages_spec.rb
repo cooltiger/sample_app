@@ -78,7 +78,7 @@ describe "Micropost pages", :type => :request do
 
     it "should list each feed" do
 
-      user.feed.paginate(page: 1, per_page: 5).each do |feed_item|
+      user.feed.paginate(page: 1).each do |feed_item|
         expect(page).to have_selector('li', text: feed_item.content)
       end
     end
