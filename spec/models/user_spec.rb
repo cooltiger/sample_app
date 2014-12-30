@@ -153,14 +153,11 @@ describe User do
   describe "micropost associations" do
 
     before { @user.save }
-    let!(:older_mpost) { FactoryGirl.create(:micropost, user: @user, created_at: 1.day.ago )}
-    let!(:newer_mpost) { FactoryGirl.create(:micropost, user: @user, created_at: 1.hour.ago )}
+    let!(:older_micropost) { FactoryGirl.create(:micropost, user: @user, created_at: 1.day.ago )}
+    let!(:newer_micropost) { FactoryGirl.create(:micropost, user: @user, created_at: 1.hour.ago )}
 
     it  "should have the right microposts in the right order" do
-      expect(@user.microposts).to eq [ newer_mpost, older_mpost]
-
-      # below is deprecated
-      # @user.microposts.should == [ newer_mpost, older_mpost ]
+      expect(@user.microposts).to eq [ newer_micropost, older_micropost]
     end
 
     it "should destroy associated microposts" do
@@ -174,11 +171,24 @@ describe User do
     end
 
     describe "status" do
-      let(:unfollowed_post) { FactoryGirl.create(:micropost, user: FactoryGirl.create(:user)) }
+      let(:unfollowed_post) do
+        FactoryGirl.create(:micropost, user: FactoryGirl.create(:user))
+      end
+      let(:followed_user) { FactoryGirl.create(:user) }
 
-      its(:feed) { should include(older_mpost)}
-      its(:feed) { should include(newer_mpost)}
-      its(:feed) { should_not include(unfollowed_post)}
+      before do
+        @user.follow!(followed_user)
+        3.times { followed_user.microposts.create!(content: "Lorem ipsum") }
+      end
+
+      its(:feed) { should include(newer_micropost) }
+      its(:feed) { should include(older_micropost) }
+      its(:feed) { should_not include(unfollowed_post) }
+      its(:feed) do
+        followed_user.microposts.each do |micropost|
+          should include(micropost)
+        end
+      end
     end
 
   end
