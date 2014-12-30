@@ -11,6 +11,56 @@ describe "User pages", :type => :request do
 
     it { should have_content(user.name) }
     it { should have_title(user.name) }
+
+    describe "follow and unfollow buttons " do
+
+      let(:other_user) { FactoryGirl.create(:user) }
+      before { sign_in user }
+
+      describe "follow other user" do
+        before do
+          visit user_path(other_user)
+        end
+
+        it "should increase a followed user" do
+          expect { click_button "Follow" }.to change(user.followed_users, :count).by(1)
+        end
+
+        it "should increase a follower user " do
+          expect { click_button "Follow" }.to change(other_user.follower_users, :count).by(1)
+        end
+
+        context "toggle the button" do
+         before { click_button "Follow" }
+          it { should have_title(full_title(other_user.name)) }
+          it { should have_css("input[value='Unfollow']") }
+        end
+      end
+
+      describe "unfollow other user" do
+        before do
+          user.follow!(other_user)
+          visit user_path(other_user)
+        end
+
+        it "should increase a followed user" do
+          expect{ click_button "Unfollow" }.to change(user.followed_users, :count).by(-1)
+        end
+
+        it "should increase a follower user " do
+          expect{ click_button "Unfollow" }.to change(other_user.follower_users, :count).by(-1)
+        end
+
+
+        context "toggle the button" do
+          before { click_button "Unfollow" }
+          it { should have_title(full_title(other_user.name)) }
+          it { should have_css("input[value='Follow']") }
+        end
+      end
+
+    end
+
   end
 
   describe "signup" do
@@ -175,7 +225,7 @@ describe "User pages", :type => :request do
     let(:other_user) { FactoryGirl.create(:user) }
     before { user.follow!(other_user) }
 
-    describe "followed users" do
+    context "followed users list" do
       before do
         sign_in user
         visit followings_user_path(user)
@@ -186,7 +236,7 @@ describe "User pages", :type => :request do
       it { should have_link(other_user.name, href: user_path(other_user)) }
     end
 
-    describe "followers" do
+    context "follower users list" do
       before do
         sign_in other_user
         visit followers_user_path(other_user)
@@ -197,5 +247,8 @@ describe "User pages", :type => :request do
       it { should have_link(user.name, href: user_path(user)) }
     end
   end
+
+
+
 
 end
