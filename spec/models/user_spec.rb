@@ -20,6 +20,13 @@ describe User do
   it { should respond_to(:admin) }
   it { should respond_to(:microposts)}
   it { should respond_to(:feed)}
+  it { should respond_to(:relationships)}
+  it { should respond_to(:reverse_relationships)}
+  it { should respond_to(:followed_users)}
+  it { should respond_to(:follower_users)}
+
+  it { should respond_to(:following?)}
+  it { should respond_to(:follow!)}
 
 
   it { should be_valid }
@@ -176,21 +183,36 @@ describe User do
 
   end
 
-  # below is same as :  it { should respond_to(:name) }
-  # it "should respond to 'name'" do
-  #  expect(@user).to respond_to(:name)
-  # end
 
+  describe "following and followed" do
+    let(:other_user) { FactoryGirl.create(:user) }
 
-  # below is same as :  it { should be_valid }
-  # it "should be valid" do
-  #  expect(@user).to be_valid
-  # end
+    before do
+      @user.save
+      @user.follow!(other_user)
+    end
 
+    # be_following mean : boolean vertification of following method
+    it { should be_following(other_user) }
+    its(:followed_users) { should include(other_user) }
+
+    describe "followed user" do
+      subject { other_user }
+      its(:follower_users) { should include(@user) }
+    end
+
+    context "unfollow other user"  do
+      before do
+        @user.unfollow!(other_user)
+      end
+
+      it { should_not be_following(other_user) }
+      its(:followed_users) { should_not include(other_user) }
+
+      describe "followed user" do
+        subject { other_user }
+        its(:follower_users) { should_not include(@user) }
+      end
+    end
+  end
 end
-
-# require 'rails_helper'
-#
-# RSpec.describe User, :type => :model do
-#   pending "add some examples to (or delete) #{__FILE__}"
-# end

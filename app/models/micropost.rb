@@ -6,4 +6,7 @@ class Micropost < ActiveRecord::Base
 
   # define the order by default_scope
   default_scope  { order 'microposts.created_at DESC' }
+
+  self.per_page = 10
+
 end

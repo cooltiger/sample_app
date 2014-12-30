@@ -13,7 +13,7 @@ class MicropostsController < ApplicationController
       redirect_to root_url
     else
       # to show the error message page itself
-      @feed_items = current_user.feed.paginate(page: params[:page], per_page: 5)
+      @feed_items = current_user.feed.paginate(page: params[:page])
       # render controller/action
       render 'static_pages/home'
     end

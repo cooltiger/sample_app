@@ -78,7 +78,7 @@ describe "Micropost pages", :type => :request do
 
     it "should list each feed" do
 
-      user.feed.paginate(page: 1, per_page: 5).each do |feed_item|
+      user.feed.paginate(page: 1).each do |feed_item|
         expect(page).to have_selector('li', text: feed_item.content)
       end
     end
@@ -100,18 +100,5 @@ describe "Micropost pages", :type => :request do
       it { should have_link("delete") }
     end
   end
-
-
 end
 
-
-# require 'rails_helper'
-#
-# RSpec.describe "MicropostPages", :type => :request do
-#   describe "GET /micropost_pages" do
-#     it "works! (now write some real specs)" do
-#       get micropost_pages_index_path
-#       expect(response).to have_http_status(200)
-#     end
-#   end
-# end
