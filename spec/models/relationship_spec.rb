@@ -35,4 +35,28 @@ describe Relationship do
     it { should_not be_valid }
   end
 
+  describe "when the follower user is deleted" do
+    before do
+      relationship.save
+      follower.destroy
+    end
+    it "should not be found" do
+      expect do
+        relationship.reload
+      end.to raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
+
+  describe "when the followed user is deleted" do
+    before do
+      relationship.save
+      followed.destroy
+    end
+    it "should not be found" do
+      expect do
+        relationship.reload
+      end.to raise_error(ActiveRecord::RecordNotFound)
+    end
+  end
+
 end
