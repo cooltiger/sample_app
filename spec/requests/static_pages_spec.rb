@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "Static pages", :type => :request do
   let(:base_title) { "Ruby on Rails Tutorial Sample App" }
 
-  subject {page}
+  subject { page }
 
   shared_examples_for "all static pages" do
     it { is_expected.to have_content('sample app') }
@@ -12,7 +12,7 @@ describe "Static pages", :type => :request do
 
   describe "Home page" do
 
-    before {visit root_path}
+    before { visit root_path }
 
     let(:page_title) { '' }
 
@@ -20,7 +20,7 @@ describe "Static pages", :type => :request do
     it { should_not have_title('| Home') }
 
     describe "for signed-in users" do
-      let(:user) { FactoryGirl.create(:user)}
+      let(:user) { FactoryGirl.create(:user) }
       before do
         FactoryGirl.create(:micropost, user: user, content: Faker::Lorem.sentence(5))
         FactoryGirl.create(:micropost, user: user, content: Faker::Lorem.sentence(5))
@@ -30,7 +30,7 @@ describe "Static pages", :type => :request do
 
       it "should render the user's feed" do
         user.feed.each do |item|
-          expect(page).to  have_selector("li##{item.id}", text: item.content)
+          expect(page).to have_selector("li##{item.id}", text: item.content)
         end
       end
 
@@ -49,8 +49,39 @@ describe "Static pages", :type => :request do
     end
   end
 
+
+  describe "Profile page" do
+
+    describe "for signed-in users" do
+      let(:user) { FactoryGirl.create(:user) }
+      before do
+        FactoryGirl.create(:micropost, user: user, content: "Lorem")
+        FactoryGirl.create(:micropost, user: user, content: "Ipsum")
+        sign_in user
+        visit user_path(user)
+      end
+
+      it "should render the user's microposts" do
+        user.microposts.each do |p|
+          expect(page).to have_selector("li", text: p.content)
+        end
+      end
+
+      describe "follower/following counts" do
+        let(:other_user) { FactoryGirl.create(:user) }
+        before do
+          other_user.follow!(user)
+          visit user_path(user)
+        end
+        it { should have_link("0 followings", href: followings_user_path(user)) }
+        it { should have_link("1 follower", href: followers_user_path(user)) }
+      end
+    end
+  end
+
+
   describe "Help page" do
-    before { visit help_path}
+    before { visit help_path }
 
     let(:page_title) { 'Help' }
 
@@ -61,8 +92,8 @@ describe "Static pages", :type => :request do
   describe "About page" do
     before { visit about_path }
 
-    it { is_expected.to have_content('About')}
-    it { is_expected.to have_title("#{base_title} | About")}
+    it { is_expected.to have_content('About') }
+    it { is_expected.to have_title("#{base_title} | About") }
 
   end
 
@@ -70,8 +101,8 @@ describe "Static pages", :type => :request do
 
     before { visit contact_path }
 
-    it { is_expected.to have_content('Contact')}
-    it { is_expected.to have_title("#{base_title} | Contact")}
+    it { is_expected.to have_content('Contact') }
+    it { is_expected.to have_title("#{base_title} | Contact") }
   end
 
   it "should have the right links on the layout" do
