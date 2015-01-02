@@ -20,6 +20,12 @@ def make_users
                          password_confirmation: "aaa111")
   admin2.toggle!(:admin)
 
+  admin3 = User.create!(name: "Yu Zhenjiang",
+                        email: "gyo@gmail.com",
+                        password: "aaa111",
+                        password_confirmation: "aaa111")
+  admin3.toggle!(:admin)
+
   99.times do |n|
     name  = Faker::Name.name
     email = "example-#{n+1}@railstutorial.jp"
