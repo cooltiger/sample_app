@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   has_many :follower_users, through: :reverse_relationships, source: :follower
 
   # below can not user in rails 4
+  # modify test 1
   attr_accessible :name, :email, :password, :password_confirmation
 
   self.per_page = 10

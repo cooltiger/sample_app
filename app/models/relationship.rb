@@ -8,5 +8,5 @@ class Relationship < ActiveRecord::Base
   validates :followed_id, presence: true
 
   self.per_page = 10
-
+  # modify 2
 end
