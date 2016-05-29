@@ -24,3 +24,4 @@ doc/
 .idea
 .secret
 vendor/bundle
+coverage/
