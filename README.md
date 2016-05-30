@@ -1,6 +1,7 @@
 # Sample App for learning rails
 [![Build Status](https://travis-ci.org/cooltiger/sample_app.svg?branch=master)](https://travis-ci.org/cooltiger/sample_app)
 [![Coverage Status](https://coveralls.io/repos/cooltiger/sample_app/badge.svg?branch=master)](https://coveralls.io/r/cooltiger/sample_app?branch=master)
+[![wercker status](https://app.wercker.com/status/07142239a36bbeb9e6711504a294c743/m "wercker status")](https://app.wercker.com/project/bykey/07142239a36bbeb9e6711504a294c743)
 
 == README
 
