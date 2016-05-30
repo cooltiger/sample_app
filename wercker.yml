@@ -34,7 +34,7 @@ build:
           
         - script:
           name: Set up db
-          code: RAILS_ENV=test bundle exec rake db:schema:load
+          code: RAILS_ENV=test bundle exec rake db:create db:schema:load
 
         - script:
             name: rspec
