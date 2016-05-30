@@ -22,9 +22,6 @@ build:
     steps:
         - bundle-install
         
-        - rails-database-yml:
-           service: postgresql-docker
-
         - script:
           name: echo ruby information
           code: |
