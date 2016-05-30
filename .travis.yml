@@ -9,5 +9,6 @@ before_script:
 script:
   - bundle exec rspec spec
 notifications:
-  slack:
+  slack: blueplanet:7Y3kUhhJAvnG7vW5OJ70nJYW
     secure: cEYAxFxKLKDOup2NeDCznPIzRhFL0gJxV8HAwBUmCbjhweYU6nLx7CsP9gq9DjpdA2pQVpoO2tzeYf8i2586VerfMY+5ZkYTs/MgS6sDqzO0lKcny5AXtgXCHEExR+im7Wowm4D1V5cn4CZe8Cb83yrs1hgHLyzzNnYYFcej37U=
+  
