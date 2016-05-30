@@ -20,8 +20,10 @@ build:
     # Read more about steps on our dev center:
     # http://devcenter.wercker.com/docs/steps/index.html
     steps:
+        ## to solve the problem of js runtime error
         - install-packages:
            packages: nodejs    
+           
         - bundle-install
         
         - script:
